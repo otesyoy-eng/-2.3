@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>豊洲ダンジョン：競り札の迷宮 Ver.2.1</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1e3a8a">
+</head>
+<body>
+<div class="wrap oneWrap">
+  <header class="topHeader">
+    <div>
+      <h1>豊洲ダンジョン：競り札の迷宮</h1>
+      <div class="small" id="verTitle"></div>
+      <div class="small" id="features"></div>
+    </div>
+    <div class="topActions">
+      <button class="sec" onclick="showDeck()">デッキ</button>
+      <button class="sec" onclick="toggleFullLog()">詳細ログ</button>
+      <button class="sec" onclick="newRun()">最初から</button>
+    </div>
+  </header>
+
+  <div class="mapPanel panel">
+    <div class="mapTitle">進行マップ</div>
+    <div class="mapline bigMap" id="mapline"></div>
+  </div>
+
+  <main class="panel gamePanel">
+    <section class="combatBoard">
+      <section class="ent compactEnt" id="playerBox">
+        <h2>あなた</h2>
+        <div class="hpLine">HP <b id="php"></b></div>
+        <div class="bar"><div class="fill" id="pbar"></div></div>
+        <div class="quickStats">
+          <div class="bigStat">🛡 <span id="pblock"></span></div>
+          <div class="bigStat">⚡ <span id="energy"></span></div>
+          <div class="bigStat">🐟 <span id="fresh"></span></div>
+          <div class="bigStat">💰 <span id="coin"></span></div>
+        </div>
+        <div class="stats miniStats">
+          <div class="stat">ターン <b id="turn"></b></div>
+          <div class="stat">進行 <b id="progress"></b></div>
+          <div class="stat">山札 <b id="draw"></b></div>
+          <div class="stat">捨札 <b id="discard"></b></div>
+        </div>
+        <div class="relics relicStrip" id="relics"></div>
+      </section>
+
+      <section class="focusPanel">
+        <div class="focusLabel">敵の次の行動</div>
+        <div class="intentBig" id="intentBig">-</div>
+        <div class="centerMsg" id="centerMsg">カードを選んで行動してください。</div>
+        <div class="latestLog" id="latestLog"></div>
+        <div class="btns centerBtns">
+          <button class="main" id="endBtn" onclick="endTurn()">ターン終了</button>
+        </div>
+      </section>
+
+      <section class="ent compactEnt" id="enemyBox">
+        <h2 id="ename">敵</h2>
+        <div class="hpLine">HP <b id="ehp"></b></div>
+        <div class="bar"><div class="fill" id="ebar"></div></div>
+        <div class="quickStats">
+          <div class="bigStat">🛡 <span id="eblock"></span></div>
+        </div>
+        <div class="intent hiddenIntent" id="intent"></div>
+      </section>
+    </section>
+
+    <section class="handPanel">
+      <div class="sectionTitle">手札</div>
+      <div class="hand" id="hand"></div>
+    </section>
+
+    <section class="zone overlayZone" id="choiceZone">
+      <h2 id="choiceTitle"></h2>
+      <p id="choiceBody" style="white-space:pre-line"></p>
+      <div class="cards" id="choiceCards"></div>
+      <div class="btns" id="choiceBtns"></div>
+    </section>
+
+    <section class="screen" id="result">
+      <h2 id="resultTitle"></h2>
+      <p id="resultText"></p>
+      <button class="main" onclick="newRun()">もう一度遊ぶ</button>
+    </section>
+  </main>
+
+  <aside class="panel fullLogPanel" id="fullLogPanel">
+    <div class="logHead">
+      <h2>詳細ログ</h2>
+      <button class="sec" onclick="toggleFullLog()">閉じる</button>
+    </div>
+    <div class="log" id="log"></div>
+    <div class="footer">通常は中央の最新ログ3件だけ見れば判断できます。詳細確認時のみ開いてください。</div>
+  </aside>
+</div>
+
+
+<script src="main.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js"));
+}
+</script>
+</body>
+</html>
